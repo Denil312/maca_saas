@@ -28,7 +28,7 @@ export default async function AboutPage() {
     <div className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="mb-8 text-3xl font-bold text-amber-900">關於我們</h1>
       <div
-        className="prose prose-amber max-w-none text-amber-900/90 prose-p:leading-relaxed prose-headings:text-amber-900"
+        className="prose prose-amber max-w-none text-amber-900/90 prose-p:leading-relaxed prose-p:mb-4 prose-headings:text-amber-900 [&>p:last-child]:mb-0"
         dangerouslySetInnerHTML={{
             __html: content ? formatContent(content) : '<p class="text-amber-700/70">尚無內容，請至管理後台填寫。</p>',
           }}
@@ -46,8 +46,10 @@ function escapeHtml(s: string): string {
 }
 
 function formatContent(text: string): string {
-  return text
-    .split("\n\n")
+  // 正規化換行符號（支援 Windows \r\n、舊 Mac \r）
+  const normalized = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  return normalized
+    .split(/\n\s*\n/) // 以空行分隔段落（支援 \n\n 或 \n  \n）
     .map((p) => {
       const t = p.trim();
       if (!t) return "";
