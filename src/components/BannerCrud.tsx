@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
+import { revalidateAfterSave } from "@/app/actions/revalidate";
 
 const BUCKET = "event-images";
 const BANNER_KEY = "banner_images";
@@ -90,6 +91,7 @@ export function BannerCrud() {
         .upsert({ key: BANNER_KEY, title: "首頁 Banner 圖片", value }, { onConflict: "key" });
 
       if (error) throw new Error(error.message);
+      await revalidateAfterSave("banner");
       setUrls(allUrls);
       setImageFiles([]);
       setMessage({ type: "success", text: "已儲存 Banner 圖片" });

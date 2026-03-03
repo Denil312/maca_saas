@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { revalidateAfterSave } from "@/app/actions/revalidate";
 
 const ABOUT_KEY = "about_us";
 
@@ -40,6 +41,7 @@ export function AboutUsCrud() {
     if (error) {
       setMessage({ type: "error", text: `儲存失敗：${error.message}` });
     } else {
+      await revalidateAfterSave("about");
       setMessage({ type: "success", text: "已儲存關於我們內容" });
     }
     setSaving(false);

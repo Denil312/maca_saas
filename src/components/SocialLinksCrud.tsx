@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { revalidateAfterSave } from "@/app/actions/revalidate";
 
 export function SocialLinksCrud() {
   const [facebookUrl, setFacebookUrl] = useState("");
@@ -44,6 +45,7 @@ export function SocialLinksCrud() {
     if (error) {
       setMessage({ type: "error", text: `儲存失敗：${error.message}` });
     } else {
+      await revalidateAfterSave("social");
       setMessage({ type: "success", text: "已儲存社群連結" });
     }
     setSaving(false);

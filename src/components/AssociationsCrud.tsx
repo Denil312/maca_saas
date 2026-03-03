@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
+import { revalidateAfterSave } from "@/app/actions/revalidate";
 
 const BUCKET = "event-images";
 
@@ -134,6 +135,7 @@ export function AssociationsCrud() {
         const { error } = await supabase.from("associations").insert(payload);
         if (error) throw new Error(`新增失敗：${error.message}`);
       }
+      await revalidateAfterSave("associations");
       resetForm();
       fetchList();
     } catch (err) {
@@ -148,7 +150,10 @@ export function AssociationsCrud() {
     if (!confirm(msg)) return;
     const { error } = await supabase.from("associations").delete().eq("id", item.id);
     if (error) setError(error.message);
-    else fetchList();
+    else {
+      await revalidateAfterSave("associations");
+      fetchList();
+    }
   }
 
   const allPreviews = [...existingUrls, ...previewUrls];
