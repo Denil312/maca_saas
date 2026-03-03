@@ -39,6 +39,23 @@ INSERT INTO admin_users (id)
 VALUES ('your-user-uuid');
 ```
 
+或使用腳本（需 `SUPABASE_SERVICE_ROLE_KEY`）：
+
+```bash
+npm run db:add-admin -- your@email.com
+```
+
+### 重設管理員密碼
+
+**方式一：登入頁「重設密碼」**  
+點擊「忘記密碼？重設密碼」，輸入 email 後會收到重設連結。需在 Supabase Dashboard → Authentication → URL Configuration 加入 Redirect URL：`https://你的網域/admin/reset-password`
+
+**方式二：本機腳本（需 Service Role Key）**
+
+```bash
+npm run db:reset-password -- your@email.com 新密碼
+```
+
 ### 4. Storage（圖片上傳用）
 
 建立 `event-images` bucket：

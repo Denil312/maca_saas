@@ -11,6 +11,7 @@ export async function middleware(request: NextRequest) {
 
   const isLoginPage = request.nextUrl.pathname === '/admin/login';
   const isRegisterPage = request.nextUrl.pathname === '/admin/register';
+  const isResetPasswordPage = request.nextUrl.pathname === '/admin/reset-password';
 
   // 只限管理員登入，註冊頁面導向登入頁
   if (isRegisterPage) {
@@ -34,8 +35,8 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // /admin 及其子路徑（不含 login）需已登入
-  if (!isLoginPage && !user) {
+  // /admin 及其子路徑（不含 login、reset-password）需已登入
+  if (!isLoginPage && !isResetPasswordPage && !user) {
     return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
