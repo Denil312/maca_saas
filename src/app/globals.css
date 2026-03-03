@@ -24,3 +24,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* 關於我們頁面：段落間距 */
+.about-content p {
+  margin-bottom: 1rem;
+}
+.about-content p:last-child {
+  margin-bottom: 0;
+}
+.about-content .about-spacer {
+  margin-bottom: 1rem;
+  min-height: 0.5rem;
+}

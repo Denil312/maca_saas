@@ -72,7 +72,7 @@ export function AboutUsCrud() {
             rows={12}
             className="w-full rounded-lg border border-amber-200 px-3 py-2 text-amber-900 placeholder:text-amber-400/60"
           />
-          <p className="mt-1 text-xs text-amber-600/70">段落之間請空一行（按 Enter 兩次），單一換行會保留在同一段內。</p>
+          <p className="mt-1 text-xs text-amber-600/70">每一行會顯示為獨立段落，空行會產生額外間距。</p>
         </div>
         {message && (
           <p className={`text-sm ${message.type === "success" ? "text-green-700" : "text-red-700"}`}>
