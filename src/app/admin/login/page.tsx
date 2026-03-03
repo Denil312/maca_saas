@@ -38,8 +38,9 @@ export default function AdminLoginPage() {
         router.push("/admin");
         router.refresh();
       }
-    } catch {
-      setError(forgotMode ? "發送重設連結時發生錯誤" : "登入時發生錯誤");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : (forgotMode ? "發送重設連結時發生錯誤" : "登入時發生錯誤");
+      setError(msg);
     } finally {
       setLoading(false);
     }
