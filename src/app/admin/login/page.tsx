@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -11,7 +10,6 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const [forgotMode, setForgotMode] = useState(false);
   const [forgotSent, setForgotSent] = useState(false);
-  const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -35,8 +33,9 @@ export default function AdminLoginPage() {
           setError(error.message);
           return;
         }
-        router.push("/admin");
-        router.refresh();
+        // 使用完整頁面導向，確保 session cookie 已送出後再進入後台
+        window.location.href = "/admin";
+        return;
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : (forgotMode ? "發送重設連結時發生錯誤" : "登入時發生錯誤");
