@@ -68,6 +68,9 @@ export function Header({ facebookUrl, instagramUrl }: HeaderProps) {
       <Link href="/about" className={navLinkClass} onClick={() => setMenuOpen(false)}>
         關於我們
       </Link>
+      <Link href="/contact" className={navLinkClass} onClick={() => setMenuOpen(false)}>
+        聯絡我們
+      </Link>
     </>
   );
 
@@ -165,6 +168,9 @@ export function Header({ facebookUrl, instagramUrl }: HeaderProps) {
             </Link>
             <Link href="/about" className={navLinkClass + " py-2"} onClick={() => setMenuOpen(false)}>
               關於我們
+            </Link>
+            <Link href="/contact" className={navLinkClass + " py-2"} onClick={() => setMenuOpen(false)}>
+              聯絡我們
             </Link>
             <div className="flex items-center gap-3 pt-2 border-t border-amber-200/50">
               <SocialIcons />
