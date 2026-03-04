@@ -20,7 +20,7 @@ export default async function ActivitiesPage() {
         .from("activities")
         .select("id, title, date, description, image_url")
         .gte("date", today)
-        .order("date", { ascending: true });
+        .order("date", { ascending: false });
 
       if (error) {
         console.error("[ActivitiesPage] Supabase error:", error);
