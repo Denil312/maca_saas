@@ -23,6 +23,35 @@ function parseImageUrls(val: string | null): string[] {
   return [val];
 }
 
+type TextSegment = { type: "text"; value: string };
+type LinkSegment = { type: "link"; url: string; label: string };
+type Segment = TextSegment | LinkSegment;
+
+/** 將描述文字中的網址辨識出來，回傳文字與連結片段（僅允許 http/https） */
+function linkifyDescription(text: string): Segment[] {
+  const segments: Segment[] = [];
+  const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/gi;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = urlRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      segments.push({ type: "text", value: text.slice(lastIndex, match.index) });
+    }
+    const raw = match[0];
+    const href = raw.toLowerCase().startsWith("www.") ? `https://${raw}` : raw;
+    if (href.startsWith("https://") || href.startsWith("http://")) {
+      segments.push({ type: "link", url: href, label: raw });
+    } else {
+      segments.push({ type: "text", value: raw });
+    }
+    lastIndex = match.index + raw.length;
+  }
+  if (lastIndex < text.length) {
+    segments.push({ type: "text", value: text.slice(lastIndex) });
+  }
+  return segments.length > 0 ? segments : [{ type: "text", value: text }];
+}
+
 export function ActivityCard({ activity }: ActivityCardProps) {
   const dateStr = new Date(activity.date).toLocaleDateString("zh-TW", {
     year: "numeric",
@@ -41,7 +70,21 @@ export function ActivityCard({ activity }: ActivityCardProps) {
         </h3>
         {activity.description && (
           <p className="mt-2 text-amber-900/70 whitespace-pre-wrap break-words">
-            {activity.description}
+            {linkifyDescription(activity.description).map((seg, i) =>
+              seg.type === "text" ? (
+                seg.value
+              ) : (
+                <a
+                  key={i}
+                  href={seg.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-700 underline hover:text-amber-800"
+                >
+                  {seg.label}
+                </a>
+              )
+            )}
           </p>
         )}
       </div>
