@@ -75,7 +75,7 @@ export default async function HomePage() {
                 <h3 className="text-lg font-semibold text-amber-900">
                   {item.title || "—"}
                 </h3>
-                <p className="mt-2 text-amber-900/70">{item.description || "—"}</p>
+                <p className="mt-2 text-amber-900/70 whitespace-pre-wrap break-words">{item.description || "—"}</p>
               </div>
             </article>
           );
