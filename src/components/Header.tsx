@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 
 interface HeaderProps {
@@ -123,8 +124,15 @@ export function Header({ facebookUrl, instagramUrl }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-amber-50 backdrop-blur supports-[backdrop-filter]:bg-amber-50/95">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-4">
-        <Link href="/" className="font-serif text-xl font-semibold tracking-wide text-amber-900 shrink-0">
-          MACA
+        <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="MACA 首頁">
+          <Image
+            src="/logo.svg"
+            alt="MACA"
+            width={40}
+            height={40}
+            className="h-10 w-10 object-contain"
+          />
+          <span className="font-serif text-xl font-semibold tracking-wide text-amber-900">MACA</span>
         </Link>
 
         {/* Desktop: 橫向導覽 */}
