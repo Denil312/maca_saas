@@ -38,8 +38,8 @@ function LocationIcon({ className }: { className?: string }) {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-16 md:flex-row">
-      <section className="w-full md:w-1/2">
+    <div className="mx-auto max-w-3xl px-6 py-16">
+      <section className="w-full">
         <h1 className="mb-6 text-3xl font-bold text-amber-900">聯絡我們</h1>
         <p className="mb-6 text-sm text-amber-900/70">
           歡迎透過 WhatsApp 或親臨本會，亦可使用 Google 地圖導航前往。
@@ -76,31 +76,18 @@ export default function ContactPage() {
               <p className="text-base text-amber-900">
                 {ADDRESS}
               </p>
-              <a
-                href={MAP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-1 inline-flex items-center text-sm font-medium text-amber-700 hover:text-amber-900 hover:underline"
-              >
-                在 Google 地圖中開啟
-              </a>
+              <div className="mt-1">
+                <a
+                  href={MAP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm font-medium text-amber-700 hover:text-amber-900 hover:underline"
+                >
+                  在 Google 地圖中開啟
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="w-full md:w-1/2">
-        <div className="mb-3 text-sm font-medium text-amber-800">
-          Google 地圖
-        </div>
-        <div className="overflow-hidden rounded-xl border border-amber-200/70 bg-white shadow-sm">
-          <iframe
-            src={MAP_URL}
-            title="MACA 位置 - Google 地圖"
-            className="h-[320px] w-full border-0"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
         </div>
       </section>
     </div>
